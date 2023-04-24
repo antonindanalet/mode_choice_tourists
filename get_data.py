@@ -267,7 +267,8 @@ def get_data():
 
     df.fillna(-99, inplace=True)
 
-    df.to_csv('dataset_TMS.csv', index=False)
+    # Uncomment, if visual checks are needed:
+    # df.to_csv('output/dataset_TMS.csv', index=False)
 
     return df
 
