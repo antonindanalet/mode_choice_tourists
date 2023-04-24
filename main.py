@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 import biogeme.database as db
 import biogeme.biogeme as bio
 from biogeme import models
@@ -13,7 +15,6 @@ def run():
 def estimate_model(df):
     database = db.Database('tms', df)
 
-    # PURPOSE = Variable('PURPOSE')
     transport_mode = Variable('transport_mode')
     age = Variable('age')
     country = Variable('country')
@@ -41,17 +42,7 @@ def estimate_model(df):
     region_sottoceneri = DefineVariable('region_sottoceneri', region == 14, database)
     region_bodensee = DefineVariable('region_bodensee', region == 15, database)
     region_ostalpen = DefineVariable('region_ostalpen', region == 16, database)
-    # TRAIN_CO = Variable('TRAIN_CO')
-    # CAR_AV = Variable('CAR_AV')
-    # SP = Variable('SP')
-    # TRAIN_AV = Variable('TRAIN_AV')
-    # TRAIN_TT = Variable('TRAIN_TT')
-    # SM_TT = Variable('SM_TT')
-    # CAR_TT = Variable('CAR_TT')
-    # CAR_CO = Variable('CAR_CO')
-    # SM_CO = Variable('SM_CO')
-    # SM_AV = Variable('SM_AV')
-    #
+
     # Parameters to be estimated
     ASC_train = Beta('ASC_train', 0, None, None, 0)
     ASC_bicycle = Beta('ASC_bicycle', 0, None, None, 0)
@@ -549,6 +540,11 @@ def estimate_model(df):
     # observation to the log likelihood function.
     logprob = models.loglogit(V, av, transport_mode)
 
+    # Change the working directory, so that biogeme writes in the correct folder
+    standard_directory = os.getcwd()
+    output_directory = Path('data/output/')
+    os.chdir(output_directory)
+
     # Create the Biogeme object
     biogeme = bio.BIOGEME(database, logprob)
     biogeme.modelName = 'mode_choice_tourists'
@@ -561,9 +557,11 @@ def estimate_model(df):
 
     # Get the results in a pandas table
     pandasResults = results.getEstimatedParameters()
-    print(pandasResults)
 
     results.writeLaTeX()
+
+    # Go back to the normal working directory
+    os.chdir(standard_directory)
 
 
 if __name__ == '__main__':

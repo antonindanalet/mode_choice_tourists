@@ -274,7 +274,7 @@ def get_data():
 
 def add_regions(df):
     # Read FSO data
-    path_to_regions = Path('data/Raumgliederungen_AMR2018.xlsx')
+    path_to_regions = Path('data/input/Raumgliederungen_AMR2018.xlsx')
     regions = pd.read_excel(path_to_regions, skiprows=[0, 2])
     regions = regions.drop(['BFS Gde-nummer', 'Kantons-nummer', 'Kanton', 'Bezirks-nummer', 'Bezirksname',
                             'Arbeitsmarktregionen 2018'], axis=1)
@@ -291,7 +291,7 @@ def add_regions(df):
 
 def add_urban_rural_typology(df):
     # Read FSO data
-    path_to_urban_rural_typology = Path('data/Raumgliederungen_StadtLand2017.xlsx')
+    path_to_urban_rural_typology = Path('data/input/Raumgliederungen_StadtLand2017.xlsx')
     urban_rural_typology = pd.read_excel(path_to_urban_rural_typology, skiprows=[0, 2])
     urban_rural_typology = urban_rural_typology.drop(['BFS Gde-nummer', 'Kantons-nummer', 'Kanton', 'Bezirks-nummer',
                                                       'Bezirksname', 'Gemeindetypologie 2012 (9 Typen)',
