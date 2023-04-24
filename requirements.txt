@@ -1,0 +1,3 @@
+biogeme~=3.2.8
+pandas~=1.3.5
+pyreadstat~=1.2.0
